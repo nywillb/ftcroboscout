@@ -1,7 +1,6 @@
 package ftc
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 )
@@ -25,8 +24,6 @@ func (toa *OrangeAllianceConfig) MakeRequest(method string, endpoint string, bod
 
 	res, err := toa.Client.Do(req)
 	if err != nil {
-		fmt.Println("ERROR")
-		fmt.Println(err)
 		return nil, err
 	}
 
