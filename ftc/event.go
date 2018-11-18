@@ -30,7 +30,7 @@ type Event struct {
 	Public          bool   `json:"is_public"`
 	TournamentLevel int    `json:"active_tournament_level"`
 	AllianceCount   int    `json:"alliance_count"`
-	FieldCound      int    `json:"field_count"`
+	FieldCount      int    `json:"field_count"`
 }
 
 // FetchMatches gets all the matches and returns them in an []Match.
