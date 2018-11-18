@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"io/ioutil"
-	"net/http"
 )
 
 // Season holds the information regarding a season.
@@ -16,14 +15,8 @@ type Season struct {
 }
 
 // FetchSeasons gets all the seasons and returns them in a []seasons.
-func FetchSeasons() ([]Season, error) {
-	client := &http.Client{}
-
-	req, err := request("GET", "api/seasons", nil)
-	if err != nil {
-		return nil, err
-	}
-	res, err := client.Do(req)
+func FetchSeasons(toa *OrangeAllianceConfig) ([]Season, error) {
+	res, err := toa.MakeRequest("GET", "api/seasons", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -42,16 +35,10 @@ func FetchSeasons() ([]Season, error) {
 }
 
 // FetchEvents gets all the events for a praticular season returns them in a []Event.
-func (s *Season) FetchEvents() ([]Event, error) {
-	client := &http.Client{}
-
+func (s *Season) FetchEvents(toa *OrangeAllianceConfig) ([]Event, error) {
 	reqBody := []byte(`{"season_key":"` + s.Key + `"}`)
 
-	req, err := request("GET", "api/event", bytes.NewBuffer(reqBody))
-	if err != nil {
-		return nil, err
-	}
-	res, err := client.Do(req)
+	res, err := toa.MakeRequest("GET", "event", bytes.NewBuffer(reqBody))
 	if err != nil {
 		return nil, err
 	}
