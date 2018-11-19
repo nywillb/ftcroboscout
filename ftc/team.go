@@ -10,7 +10,7 @@ import (
 type Team struct {
 	Key         string `json:"team_key"`
 	Region      string `json:"region_key"`
-	Number      int    `json:"number"`
+	Number      int    `json:"team_number"`
 	Name        string `json:"team_name_short"`
 	Affiliation string `json:"team_name_long"`
 	City        string `json:"city"`
@@ -47,4 +47,25 @@ func (t *Team) FetchTeamDetails(toa *OrangeAllianceConfig) error {
 
 	*t = responseArray[0]
 	return nil
+}
+
+func FetchTeams(toa *OrangeAllianceConfig) ([]Team, error) {
+	res, err := toa.MakeRequest("GET", "team", nil)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	responseArray := make([]Team, 1)
+
+	err = json.Unmarshal(body, &responseArray)
+	if err != nil {
+		return nil, err
+	}
+
+	return responseArray, nil
 }

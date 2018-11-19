@@ -12,10 +12,10 @@ func main() {
 	configure()                  //load the config and store config values
 	initalizeDatabase()          //initalize the database
 	defer deinitializeDatabase() //deinitalize the database when done using it
-	fetchLatestData()            //get the latest data from TOA
+	importData()                 //get the latest data from TOA
 }
 
-func fetchLatestData() {
+func importData() {
 
 	/* Make sure event list is up to date */
 	events, err := currentSeason.FetchEvents(&config.TOA)
@@ -141,4 +141,49 @@ func fetchLatestData() {
 		tx.Commit()
 	}
 	rows.Close()
+
+	/* Refresh teams db */
+	tx, err := db.Begin()
+	if err != nil {
+		panic(err)
+	}
+	_, err = tx.Exec("TRUNCATE TABLE `teams`")
+	if err != nil {
+		tx.Rollback()
+		panic(err)
+	}
+
+	teams, err := ftc.FetchTeams(&config.TOA)
+	if err != nil {
+		tx.Rollback()
+		panic(err)
+	}
+
+	addTeam, err := db.Prepare("INSERT INTO teams (teamKey, region, number, name, affiliation, city, state, zipCode, country, website, lastActive, rookieYear) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+	if err != nil {
+		tx.Rollback()
+		panic(err)
+	}
+
+	for _, team := range teams {
+		_, err = addTeam.Exec(
+			team.Key,
+			team.Region,
+			team.Number,
+			team.Name,
+			team.Affiliation,
+			team.City,
+			team.State,
+			team.ZipCode,
+			team.Country,
+			team.Website,
+			team.LastActive,
+			team.RookieYear,
+		)
+		if err != nil {
+			tx.Rollback()
+			panic(err)
+		}
+	}
+	tx.Commit()
 }
