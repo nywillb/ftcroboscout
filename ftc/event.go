@@ -50,6 +50,12 @@ func (e *Event) FetchMatches(toa *OrangeAllianceConfig) ([]Match, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	for i := range matches {
+		for j := range matches[i].Participants {
+			matches[i].Participants[j].GetAlliance()
+		}
+	}
 	return matches, nil
 }
 

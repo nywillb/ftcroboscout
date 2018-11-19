@@ -1,0 +1,8 @@
+[OrangeAlliance]
+APIKey = "supersecret"
+ApplicationOrigin = "ftcroboscout"
+
+[Database]
+Username = "roboscout"
+Password = "roboscout"
+Database = "ftcroboscout"

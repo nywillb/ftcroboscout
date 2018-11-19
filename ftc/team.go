@@ -22,7 +22,7 @@ type Team struct {
 	RookieYear  int    `json:"rookie_year"`
 }
 
-// Fetch team details fills in unknown information about the team
+// FetchTeamDetails fills in unknown information about the team
 func (t *Team) FetchTeamDetails(toa *OrangeAllianceConfig) error {
 	res, err := toa.MakeRequest("GET", "team/"+t.Key, nil)
 	if err != nil {

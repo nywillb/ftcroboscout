@@ -24,6 +24,26 @@ type Match struct {
 
 // MatchParticipant holds the information regarding a participant in a match.
 type MatchParticipant struct {
-	Key  string `json:"match_participant_key"`
-	Team string `json:"team_key"`
+	Key      string `json:"match_participant_key"`
+	Team     string `json:"team_key"`
+	Alliance string
+}
+
+// GetAlliance returns and sets the alliance of the participant
+func (mp *MatchParticipant) GetAlliance() string {
+	letter := mp.Key[len(mp.Key)-2]
+	if letter == 'B' {
+		mp.Alliance = "blue"
+	} else {
+		mp.Alliance = "red"
+	}
+	return mp.Alliance
+}
+
+// IsBlue returns true if the participant is on the blue alliance
+func (mp *MatchParticipant) IsBlue() bool {
+	if mp.GetAlliance() == "blue" {
+		return true
+	}
+	return false
 }
