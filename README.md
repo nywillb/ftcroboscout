@@ -1,3 +1,3 @@
-# FTC Roboscout
+# FTC Roboscout [![Build Status](https://travis-ci.org/nywillb/ftcroboscout.svg?branch=master)](https://travis-ci.org/nywillb/ftcroboscout)
 
 A ranking system for FTC, inspired by [roboscout](https://github.com/davish/roboscout)
