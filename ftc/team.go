@@ -24,7 +24,7 @@ type Team struct {
 
 // FetchTeamDetails fills in unknown information about the team
 func (t *Team) FetchTeamDetails(toa *OrangeAllianceConfig) error {
-	res, err := toa.MakeRequest("GET", "team/"+t.Key, nil)
+	res, err := MakeRequest("GET", "team/"+t.Key, nil)
 	if err != nil {
 		return err
 	}
@@ -50,7 +50,7 @@ func (t *Team) FetchTeamDetails(toa *OrangeAllianceConfig) error {
 }
 
 func FetchTeams(toa *OrangeAllianceConfig) ([]Team, error) {
-	res, err := toa.MakeRequest("GET", "team", nil)
+	res, err := MakeRequest("GET", "team", nil)
 	if err != nil {
 		return nil, err
 	}

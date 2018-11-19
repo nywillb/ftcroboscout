@@ -35,7 +35,7 @@ type Event struct {
 
 // FetchMatches gets all the matches and returns them in an []Match.
 func (e *Event) FetchMatches(toa *OrangeAllianceConfig) ([]Match, error) {
-	res, err := toa.MakeRequest("GET", "event/"+e.Key+"/matches", nil)
+	res, err := MakeRequest("GET", "event/"+e.Key+"/matches", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -60,8 +60,8 @@ func (e *Event) FetchMatches(toa *OrangeAllianceConfig) ([]Match, error) {
 }
 
 // FetchEvents gets all the events and returns them in an []Event.
-func FetchEvents(toa *OrangeAllianceConfig) ([]Event, error) {
-	res, err := toa.MakeRequest("GET", "event", nil)
+func FetchEvents() ([]Event, error) {
+	res, err := MakeRequest("GET", "event", nil)
 	if err != nil {
 		return nil, err
 	}

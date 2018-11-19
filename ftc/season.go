@@ -16,7 +16,7 @@ type Season struct {
 
 // FetchSeasons gets all the seasons and returns them in a []seasons.
 func FetchSeasons(toa *OrangeAllianceConfig) ([]Season, error) {
-	res, err := toa.MakeRequest("GET", "api/seasons", nil)
+	res, err := MakeRequest("GET", "api/seasons", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +38,7 @@ func FetchSeasons(toa *OrangeAllianceConfig) ([]Season, error) {
 func (s *Season) FetchEvents(toa *OrangeAllianceConfig) ([]Event, error) {
 	reqBody := []byte(`{"season_key":"` + s.Key + `"}`)
 
-	res, err := toa.MakeRequest("GET", "event", bytes.NewBuffer(reqBody))
+	res, err := MakeRequest("GET", "event", bytes.NewBuffer(reqBody))
 	if err != nil {
 		return nil, err
 	}
