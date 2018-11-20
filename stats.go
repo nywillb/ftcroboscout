@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/montanaflynn/stats"
 	"github.com/nywillb/ftcroboscout/ftc"
 )
@@ -206,8 +204,6 @@ func generateStats(statistics map[int]teamStatistics) map[int]teamStatistics {
 		v.AutoOpar = float64(v.AutoExpO) / float64(avgAutoExpO)
 		v.TeleOpOpar = float64(v.TeleOpExpO) / float64(avgTeleOpExpO)
 		v.EndOpar = float64(v.EndExpO) / float64(avgEndExpO)
-
-		fmt.Println(v.Opar)
 
 		statistics[i] = v
 	}
