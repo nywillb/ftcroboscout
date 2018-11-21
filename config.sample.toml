@@ -6,3 +6,6 @@ ApplicationOrigin = "ftcroboscout"
 Username = "roboscout"
 Password = "roboscout"
 Database = "ftcroboscout"
+
+[Server]
+Port = 8080

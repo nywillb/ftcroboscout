@@ -178,3 +178,42 @@ func importData() {
 	}
 	tx.Commit()
 }
+
+func fetchData() []teamResponseData {
+	var data []teamResponseData
+
+	rows, err := db.Query("SELECT region, number, name, affiliation, city, rookieYear, expo, variance, opar, autoExpo, autoVariance, autoOpar, teleOpExpo, teleOpVariance, teleOpOpar, endExpo, endVariance, endOpar  FROM teams WHERE expo > -999 ORDER BY expo DESC")
+	if err != nil {
+		panic(err)
+	}
+
+	for rows.Next() {
+		var team teamResponseData
+		err := rows.Scan(
+			&team.Region,
+			&team.Number,
+			&team.Name,
+			&team.Affiliation,
+			&team.City,
+			&team.RookieYear,
+			&team.FullMatch.ExpO,
+			&team.FullMatch.Variance,
+			&team.FullMatch.Opar,
+			&team.Auto.ExpO,
+			&team.Auto.Variance,
+			&team.Auto.Opar,
+			&team.TeleOp.ExpO,
+			&team.TeleOp.Variance,
+			&team.TeleOp.Opar,
+			&team.End.ExpO,
+			&team.End.Variance,
+			&team.End.Opar,
+		)
+		if err != nil {
+			panic(err)
+		}
+		data = append(data, team)
+	}
+
+	return data
+}
